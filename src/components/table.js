@@ -29,9 +29,11 @@ export class Table extends Component {
     currentMonth: new Date(),
     selectedDate: new Date(),
     tasks: null,
+    hideCompleted: true,
   }
 
-  componentDidMount() {
+  renderTasks = () => {
+    NProgress.inc()
     const userId = window.location.href.split("/")[5]
     axios
       .get(`${baseURL}/tasks/${userId}`)
@@ -64,23 +66,27 @@ export class Table extends Component {
               elem.dueDate = currentDate
             }
           })
-          this.setState({
-            tasks: nonCompletedTasks,
-          })
+          if (this.state.hideCompleted) {
+            this.setState({
+              tasks: nonCompletedTasks,
+            })
+          } else {
+            this.setState({
+              tasks: response,
+            })
+          }
+          NProgress.done()
         }
       })
       .catch(err => {
         console.log(err.response.data)
+        NProgress.done()
       })
   }
 
-  renderHeader() {}
-
-  renderDays() {}
-
-  renderCells() {}
-
-  onDateClick = day => {}
+  componentDidMount() {
+    this.renderTasks()
+  }
 
   nextMonth = () => {
     this.setState({
@@ -129,6 +135,7 @@ export class Table extends Component {
         this.setState({
           tasks,
         })
+        this.renderTasks()
         NProgress.done()
       })
       .catch(err => {
@@ -153,13 +160,32 @@ export class Table extends Component {
     })
   }
 
+  hideCompleted = () => {
+    this.state.hideCompleted
+      ? this.setState({ hideCompleted: false })
+      : this.setState({ hideCompleted: true })
+    this.renderTasks()
+  }
+
   render() {
     const dateFormat = "MMMM yyyy"
     const { children } = this.props
 
     return (
       <div>
-        <Container>
+        <Container className="pos-rel">
+          <div className="table-header__tabs-wrapper">
+            <div className="table-header__tabs">
+              <div
+                className={`table-header__tab ${
+                  this.state.hideCompleted ? "active" : ""
+                }`}
+                onClick={this.hideCompleted}
+              >
+                <span>Hide Completed</span>
+              </div>
+            </div>
+          </div>
           <TableWrapper className="mt-3">
             <TableHeader
               currentMonth={format(this.state.currentMonth, dateFormat)}

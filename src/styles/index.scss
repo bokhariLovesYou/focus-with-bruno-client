@@ -2,6 +2,7 @@ $lightPurple: #cdb0ff;
 $borderColor: #ccc;
 $lightGreen: #7ed8a6;
 $lightBlue: #83cefb;
+$darkGray: hsl(0, 0%, 30%);
 
 body,
 html {
@@ -445,5 +446,36 @@ figure {
 }
 
 #nprogress .spinner-icon {
-  display: none;
+  border-top-color: #b3fb9c !important;
+  border-left-color: #b3fb9c !important;
+  // display: none;
+}
+
+.table-header {
+  &__tabs-wrapper {
+    position: absolute;
+    top: -26px;
+    right: 100px;
+    z-index: 1;
+  }
+  &__tab {
+    background-color: #fff;
+    padding: 0.3rem 0.5rem 0 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: $darkGray;
+    &:hover {
+      background-color: #eee;
+    }
+    &.active {
+      background: #cef9eb;
+      font-weight: 600;
+    }
+  }
+}
+
+.pos-rel {
+  position: relative;
 }

@@ -44,17 +44,20 @@ export class PaneTitle extends Component {
         dueDate: e.target.id,
         title: e.target.value,
         status: "Active",
+        statusChanger: false,
         userHandle: "",
         userId: decodeJWT(getToken()).user_id,
       }
       axios
         .post(`${baseURL}/task/`, newTaskData, config)
         .then(res => {
-          console.log(res)
+          const taskId = res.data.message.split(" ")[1].toString()
+          console.log(taskId)
           this.setState({
             addTask: false,
             loading: false,
           })
+          newTaskData.taskId = taskId
           this.props.updateRows(newTaskData)
           NProgress.done()
         })
