@@ -1,7 +1,14 @@
 import React, { Component } from "react"
 import PaneTitle from "./PaneTitle"
 // date-fns
-import { formatISO, getDay, getMonth, getYear, getDaysInMonth } from "date-fns"
+import {
+  format,
+  formatISO,
+  getDay,
+  getMonth,
+  getYear,
+  getDaysInMonth,
+} from "date-fns"
 
 export class PaneWrapper extends Component {
   render() {
@@ -35,6 +42,14 @@ export class PaneWrapper extends Component {
       })
     }
 
+    const currentDate = format(new Date(), "yyyy-MM-dd")
+    const rowsWithoutHistory = []
+    rows.forEach(elem => {
+      if (elem.ISODate >= currentDate) {
+        rowsWithoutHistory.push(elem)
+      }
+    })
+
     if (tasks) {
       rows.forEach(elem => {
         tasks.forEach(elem2 => {
@@ -46,7 +61,7 @@ export class PaneWrapper extends Component {
     }
 
     const renderRows = () => {
-      return rows.map((item, key) => (
+      return rowsWithoutHistory.map((item, key) => (
         <div className="pane-wrapper__layout" key={key} id={item["ISODate"]}>
           <PaneTitle
             date={item["date"]}
