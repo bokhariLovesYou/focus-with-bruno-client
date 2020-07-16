@@ -1,42 +1,66 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
+import React, { Component } from "react"
+// Bootstrap
+import Container from "react-bootstrap/Container"
+// Styled Components
+import styled from "styled-components"
+import { Span } from "./StyledElements"
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
+const LogoWrapper = styled.div``
+const LogoBox = styled.div`
+  background-color: #fff;
+  width: 50px;
+  height: 25px;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+`
+const LogoSpan = styled.span`
+  font-size: 1.1rem;
+  color: #6a299a;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+`
+const HeaderOuterWrapper = styled.div`
+  padding: 1rem 0;
+`
+const HeaderInnerWrapper = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+`
+const AccountWrapper = styled.div``
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
+const AccountContent = styled.div``
 
-Header.defaultProps = {
-  siteTitle: ``,
+export class Header extends Component {
+  render() {
+    return (
+      <HeaderOuterWrapper>
+        <Container>
+          <HeaderInnerWrapper>
+            {/* Logo */}
+            <LogoWrapper>
+              <LogoBox>
+                <LogoSpan>fo.</LogoSpan>
+              </LogoBox>
+            </LogoWrapper>
+            {/* //Logo */}
+            {/* Account */}
+            <AccountWrapper>
+              <AccountContent>
+                <Span White>Account</Span>
+              </AccountContent>
+            </AccountWrapper>
+            {/* //Account */}
+          </HeaderInnerWrapper>
+        </Container>
+      </HeaderOuterWrapper>
+    )
+  }
 }
 
 export default Header
