@@ -85,14 +85,7 @@ export class PaneTitle extends Component {
     }
   }
 
-  // handleStatus = (e, data) => {
-  //   this.setState({
-  //     state: data,
-  //   })
-  // }
-
   render() {
-    // console.log(this.props.ISODate)
     return (
       <>
         {/* Pane Title */}
@@ -129,15 +122,7 @@ export class PaneTitle extends Component {
                     </div>
                   </div>
                 ))}
-                {/* {this.props.currentMonth === this.state.newTaskMonth
-                  ? this.state.newTasks.map((item, key) => (
-                      <div className="pane__titleWrapper" key={key}>
-                        <div className="pane__title">
-                          <span>{item["title"]}</span>
-                        </div>
-                      </div>
-                    ))
-                  : ""} */}
+
                 {/*  */}
                 {this.state.addTask &&
                 this.props.currentMonth === this.state.newTaskMonth ? (
@@ -207,18 +192,9 @@ export class PaneTitle extends Component {
                     handleStatus={this.props.handleStatus}
                     changeStatus={this.props.changeStatus}
                     closeChangeStatus={this.props.closeChangeStatus}
+                    inputRef={this.props.inputRef}
                   />
                 ))}
-                {/*  */}
-                {/* {this.props.currentMonth === this.state.newTaskMonth
-                  ? this.state.newTasks.map((item, key) => (
-                      <div className="pane__statusWrapper" key={key}>
-                        <div className="pane__status">
-                          <span>{item["status"]}</span>
-                        </div>
-                      </div>
-                    ))
-                  : ""} */}
                 {/*  */}
               </div>
             </div>

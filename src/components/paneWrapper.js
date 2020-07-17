@@ -66,7 +66,12 @@ export class PaneWrapper extends Component {
 
     const renderRows = () => {
       return rows.map((item, key) => (
-        <div className="pane-wrapper__layout" key={key} id={item["ISODate"]}>
+        <div
+          className="pane-wrapper__layout"
+          key={key}
+          id={item["ISODate"]}
+          ref={node => (this.node = node)}
+        >
           <PaneTitle
             date={item["date"]}
             day={item["day"]}
@@ -77,6 +82,7 @@ export class PaneWrapper extends Component {
             handleStatus={this.props.handleStatus}
             changeStatus={this.props.changeStatus}
             closeChangeStatus={this.props.closeChangeStatus}
+            inputRef={this.props.inputRef}
           />
         </div>
       ))

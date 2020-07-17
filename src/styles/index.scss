@@ -456,7 +456,10 @@ figure {
   &__tabs-wrapper {
     position: absolute;
     top: -26px;
-    right: 100px;
+    right: 2.5rem;
+    @media (min-width: 768px) {
+      right: 100px;
+    }
     z-index: 1;
   }
   &__tab {

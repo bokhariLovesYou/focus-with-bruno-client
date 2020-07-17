@@ -91,6 +91,9 @@ export class Table extends Component {
 
   componentDidMount() {
     this.renderTasks()
+    if (typeof document !== `undefined`) {
+      document.addEventListener("mousedown", this.handleClick, false)
+    }
   }
 
   nextMonth = () => {
@@ -201,6 +204,26 @@ export class Table extends Component {
     this.renderTasks()
   }
 
+  componentWillUnmount() {
+    if (typeof document !== `undefined`) {
+      document.removeEventListener("mousedown", this.handleClick, false)
+    }
+  }
+
+  handleClick = e => {
+    if (this.node) {
+      const nodeName = this.node.getAttribute("data-tag")
+      const targetName = e.target.getAttribute("data-tag")
+      if (nodeName !== targetName) {
+        return
+      } else {
+        this.closeChangeStatus()
+      }
+    }
+  }
+
+  nodeRef = React.createRef()
+
   render() {
     const dateFormat = "MMMM yyyy"
     const { children } = this.props
@@ -233,6 +256,7 @@ export class Table extends Component {
               handleStatus={this.handleStatus}
               changeStatus={this.changeStatus}
               closeChangeStatus={this.closeChangeStatus}
+              inputRef={node => (this.node = node)}
             />
             {children}
           </TableWrapper>
