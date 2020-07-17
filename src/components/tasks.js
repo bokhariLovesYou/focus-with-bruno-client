@@ -2,16 +2,17 @@ import React, { Component } from "react"
 import SEO from "./seo"
 // Components
 import Table from "./table"
-// Bootstrap
-import Container from "react-bootstrap/Container"
+import Layout from "./layout"
 
 export class Tasks extends Component {
   render() {
     const renderTasksByUser = () => {
       return (
         <>
-          <SEO title="Home" description="Home" />
-          <Table />
+          <Layout>
+            <SEO title="Home" description="Home" />
+            <Table />
+          </Layout>
         </>
       )
     }
