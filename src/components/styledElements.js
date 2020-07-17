@@ -219,6 +219,7 @@ export const PostCategoryMeta = styled.span`
 export const Span = styled.span`
   color: ${props => (props.White ? "#fff" : "")};
   font-weight: ${props => (props.Header ? "600" : "")};
+  text-transform: ${props => (props.Transformed ? "capitalize" : "")};
   font-size: ${props => (props.Header ? "1.2rem" : "")};
 `
 

@@ -15,6 +15,7 @@ export class Pane extends Component {
             changeStatus={this.props.changeStatus}
             hideCompleted={this.props.hideCompleted}
             closeChangeStatus={this.props.closeChangeStatus}
+            renderTaskDetails={this.props.renderTaskDetails}
             inputRef={this.props.inputRef}
           />
         </div>

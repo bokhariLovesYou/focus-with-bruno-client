@@ -193,13 +193,6 @@ export class Signup extends Component {
         )
       } else {
         if (typeof window !== `undefined`) {
-          // if (typeof this.props.location.state.previousPage !== "undefined") {
-          //   navigate(this.props.location.state.previousPage)
-          // } else {
-          //   navigate(
-          //     `/tasks/${decodeJWT(window.localStorage.FBIdToken).user_id}`
-          //   )
-          // }
           navigate(
             `/a/tasks/${decodeJWT(window.localStorage.FBIdToken).user_id}`
           )

@@ -82,6 +82,7 @@ export class PaneWrapper extends Component {
             handleStatus={this.props.handleStatus}
             changeStatus={this.props.changeStatus}
             closeChangeStatus={this.props.closeChangeStatus}
+            renderTaskDetails={this.props.renderTaskDetails}
             inputRef={this.props.inputRef}
           />
         </div>

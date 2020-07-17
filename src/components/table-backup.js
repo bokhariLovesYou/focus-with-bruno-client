@@ -5,7 +5,7 @@ import Pane from "./pane"
 // Styled Components
 import styled from "styled-components"
 // Bootstrap
-import { Container, Row, Col } from "react-bootstrap"
+import Container from "react-bootstrap/Container"
 // date-fns
 import { format, addMonths, subMonths } from "date-fns"
 // Axios
@@ -16,8 +16,6 @@ import NProgress from "nprogress"
 import "nprogress/nprogress.css"
 // Authentication
 import { getToken } from "../util/auth"
-// Update Task Components
-import UpdateTaskTable from "./updateTaskTable"
 
 const TableWrapper = styled.div`
   background-color: #fff;
@@ -33,8 +31,6 @@ export class Table extends Component {
     tasks: null,
     calendarPrevButton: true,
     hideCompleted: true,
-    renderTaskDetails: false,
-    singleTaskDetails: null,
   }
 
   renderTasks = () => {
@@ -97,11 +93,6 @@ export class Table extends Component {
     this.renderTasks()
     if (typeof document !== `undefined`) {
       document.addEventListener("mousedown", this.handleClick, false)
-    }
-    const urlParams = new URLSearchParams(window.location.search)
-    const taskId = urlParams.get("task_id")
-    if (taskId) {
-      this.renderTaskDetails()
     }
   }
 
@@ -237,39 +228,7 @@ export class Table extends Component {
     }
   }
 
-  renderTaskDetails = (e, data) => {
-    NProgress.inc()
-    const urlParams = new URLSearchParams(window.location.search)
-    let taskId
-    if (data) {
-      taskId = data
-    } else {
-      taskId = urlParams.get("task_id")
-      console.log(taskId)
-    }
-    axios
-      .get(`${baseURL}/task/${taskId}`)
-      .then(res => {
-        console.log(res)
-        this.setState({
-          renderTaskDetails: true,
-          singleTaskDetails: res.data,
-        })
-        NProgress.done()
-      })
-      .catch(err => {
-        console.log(err)
-        NProgress.done()
-      })
-  }
-
-  closeTaskDetails = () => {
-    NProgress.inc()
-    this.setState({
-      renderTaskDetails: false,
-    })
-    NProgress.done()
-  }
+  nodeRef = React.createRef()
 
   render() {
     const dateFormat = "MMMM yyyy"
@@ -277,53 +236,35 @@ export class Table extends Component {
 
     return (
       <div>
-        <Container className="pos-rel mt-3">
-          <Row>
-            <Col lg={this.state.renderTaskDetails ? 8 : 12}>
-              <div className="table-header__tabs-wrapper">
-                <div className="table-header__tabs">
-                  <div
-                    className={`table-header__tab ${
-                      this.state.hideCompleted ? "active" : ""
-                    }`}
-                    onClick={this.hideCompleted}
-                  >
-                    <span>Hide Completed</span>
-                  </div>
-                </div>
-              </div>
-              <TableWrapper>
-                <TableHeader
-                  currentMonth={format(this.state.currentMonth, dateFormat)}
-                  calendarPrevButton={this.state.calendarPrevButton}
-                  prevMonth={this.prevMonth}
-                  nextMonth={this.nextMonth}
-                />
-                <Pane
-                  {...this.state}
-                  updateRows={this.updateRows}
-                  handleStatus={this.handleStatus}
-                  changeStatus={this.changeStatus}
-                  closeChangeStatus={this.closeChangeStatus}
-                  renderTaskDetails={this.renderTaskDetails}
-                  inputRef={node => (this.node = node)}
-                />
-                {children}
-              </TableWrapper>
-            </Col>
-            {this.state.renderTaskDetails ? (
-              <Col lg={4}>
-                <UpdateTaskTable
-                  closeTaskDetails={this.closeTaskDetails}
-                  singleTaskDetails={this.state.singleTaskDetails}
-                  renderTaskDetails={this.renderTaskDetails}
-                />
-              </Col>
-            ) : (
-              ""
-            )}
-          </Row>
-        </Container>
+        <div className="table-header__tabs-wrapper">
+          <div className="table-header__tabs">
+            <div
+              className={`table-header__tab ${
+                this.state.hideCompleted ? "active" : ""
+              }`}
+              onClick={this.hideCompleted}
+            >
+              <span>Hide Completed</span>
+            </div>
+          </div>
+        </div>
+        <TableWrapper className="mt-3">
+          <TableHeader
+            currentMonth={format(this.state.currentMonth, dateFormat)}
+            calendarPrevButton={this.state.calendarPrevButton}
+            prevMonth={this.prevMonth}
+            nextMonth={this.nextMonth}
+          />
+          <Pane
+            {...this.state}
+            updateRows={this.updateRows}
+            handleStatus={this.handleStatus}
+            changeStatus={this.changeStatus}
+            closeChangeStatus={this.closeChangeStatus}
+            inputRef={node => (this.node = node)}
+          />
+          {children}
+        </TableWrapper>
       </div>
     )
   }

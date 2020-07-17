@@ -6,7 +6,6 @@ import Header from "./header"
 import Footer from "./footer"
 // Styled Components
 import styled from "styled-components"
-
 const LayoutWrapper = styled.div`
   background-color: #6a299a;
   height: 100vh;

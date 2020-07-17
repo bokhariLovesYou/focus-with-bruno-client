@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "gatsby"
 import PaneStatusLabel from "./paneStatusLabel"
 // Axios
 import axios from "axios"
@@ -116,11 +117,19 @@ export class PaneTitle extends Component {
               <div className="pane__column mr-0">
                 {/* */}
                 {this.props.tasks.map((item, key) => (
-                  <div className="pane__titleWrapper" key={key}>
-                    <div className="pane__title">
-                      <span>{item["title"]}</span>
+                  <Link
+                    onClick={e =>
+                      this.props.renderTaskDetails(e, item["taskId"])
+                    }
+                    key={key}
+                    to={`?task_id=${item["taskId"]}`}
+                  >
+                    <div className="pane__titleWrapper">
+                      <div className="pane__title">
+                        <span>{item["title"]}</span>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
 
                 {/*  */}

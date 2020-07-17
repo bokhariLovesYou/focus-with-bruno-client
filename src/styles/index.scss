@@ -282,6 +282,10 @@ a {
   &__column {
     margin-right: 0.5rem;
     width: 100%;
+    a {
+      color: inherit;
+      text-decoration: none !important;
+    }
   }
   &__labelDateWrapper {
     padding-right: 1.5rem;
@@ -491,4 +495,56 @@ figure {
 
 .d-none {
   display: none;
+}
+
+.d-flex {
+  .custom-col {
+    width: 100%;
+    max-width: 50%;
+  }
+  .custom-col-large {
+    width: 100%;
+    max-width: 75%;
+  }
+  .custom-col-small {
+    width: 100%;
+    max-width: 25%;
+  }
+}
+
+.update-task {
+  &__table {
+    height: 88vh;
+    overflow-y: scroll;
+    background-color: #fef3ef;
+    border-radius: 6px;
+  }
+  &__body {
+    overflow: hidden;
+    // padding: 2rem 1rem;
+    input,
+    textarea {
+      border: none;
+      outline: none;
+      padding: 0.5rem;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+      font-weight: 600;
+      margin-top: 0.4rem;
+      font-size: 0.9rem;
+    }
+    textarea {
+      min-height: 150px;
+    }
+  }
+  &__label {
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  &__field {
+    padding: 1rem;
+    background-color: #fef3ef;
+    border-bottom: 1px solid #ccc;
+  }
 }
