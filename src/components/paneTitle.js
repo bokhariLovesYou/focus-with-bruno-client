@@ -62,7 +62,7 @@ export class PaneTitle extends Component {
           NProgress.done()
         })
         .catch(err => {
-          console.log(err.response.data)
+          console.log(err)
           this.setState({
             loading: false,
           })
@@ -80,6 +80,8 @@ export class PaneTitle extends Component {
       this.setState({
         addTask: false,
       })
+    } else if (e.keyCode === 13) {
+      e.target.blur()
     }
   }
 
@@ -204,6 +206,7 @@ export class PaneTitle extends Component {
                     statusChanger={item["statusChanger"]}
                     handleStatus={this.props.handleStatus}
                     changeStatus={this.props.changeStatus}
+                    closeChangeStatus={this.props.closeChangeStatus}
                   />
                 ))}
                 {/*  */}

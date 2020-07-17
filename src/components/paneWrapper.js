@@ -15,7 +15,7 @@ export class PaneWrapper extends Component {
     const currentMonth = this.props.currentMonth
     const tasks = this.props.tasks
     const datesInMonth = getDaysInMonth(currentMonth)
-    const rows = []
+    let rows = []
 
     const weekdays = [
       "Monday",
@@ -50,6 +50,10 @@ export class PaneWrapper extends Component {
       }
     })
 
+    if (this.props.hideCompleted) {
+      rows = rowsWithoutHistory
+    }
+
     if (tasks) {
       rows.forEach(elem => {
         tasks.forEach(elem2 => {
@@ -61,7 +65,7 @@ export class PaneWrapper extends Component {
     }
 
     const renderRows = () => {
-      return rowsWithoutHistory.map((item, key) => (
+      return rows.map((item, key) => (
         <div className="pane-wrapper__layout" key={key} id={item["ISODate"]}>
           <PaneTitle
             date={item["date"]}
@@ -72,6 +76,7 @@ export class PaneWrapper extends Component {
             updateRows={this.props.updateRows}
             handleStatus={this.props.handleStatus}
             changeStatus={this.props.changeStatus}
+            closeChangeStatus={this.props.closeChangeStatus}
           />
         </div>
       ))

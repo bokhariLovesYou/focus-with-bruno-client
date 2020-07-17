@@ -42,7 +42,7 @@ export class Tasks extends Component {
   // }
 
   render() {
-    const { tasks, loading } = this.state
+    // const { tasks, loading } = this.state
     // const checkLoading = () => {
     //   if (loading) {
     //     return (

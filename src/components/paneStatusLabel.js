@@ -2,10 +2,6 @@ import React, { Component } from "react"
 import { slugify } from "../util/slugify"
 
 export class PaneStatusLabel extends Component {
-  state = {
-    changeStatus: false,
-  }
-
   componentWillMount() {
     if (typeof document !== `undefined`) {
       document.addEventListener("mousedown", this.handleClick, false)
@@ -17,11 +13,14 @@ export class PaneStatusLabel extends Component {
       document.removeEventListener("mousedown", this.handleClick, false)
     }
   }
-
-  handleClickOutside = () => {
-    this.setState({
-      changeStatus: false,
-    })
+  handleClick = e => {
+    if (this.node.contains(e.target)) {
+      return
+    } else {
+      this.props.closeChangeStatus()
+      // console.log(e.target[0])
+      console.log(this.node)
+    }
   }
 
   render() {
@@ -33,12 +32,16 @@ export class PaneStatusLabel extends Component {
         >
           <span>{this.props.status}</span>
         </div>
-        {this.props.statusChanger ? (
+        <div>
           <div
-            className="pane__statusSelectorWrapper"
-            ref={node => (this.node = node)}
+            className={`pane__statusSelectorWrapper ${
+              this.props.statusChanger ? "" : "d-none"
+            }`}
           >
-            <div className="pane__StatusSelectorContents">
+            <div
+              className="pane__StatusSelectorContents"
+              ref={node => (this.node = node)}
+            >
               <div className="pane__list">
                 <div
                   className="pane__listItem active"
@@ -73,9 +76,7 @@ export class PaneStatusLabel extends Component {
               </div>
             </div>
           </div>
-        ) : (
-          ""
-        )}
+        </div>
       </div>
     )
   }

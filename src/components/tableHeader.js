@@ -25,7 +25,12 @@ export class TableHeader extends Component {
       <>
         <TableHeaderWrapper>
           <TableHeaderContents>
-            <div className="previous-wrapper" onClick={this.props.prevMonth}>
+            <div
+              className={`previous-wrapper ${
+                !this.props.calendarPrevButton ? "disabled" : ""
+              }`}
+              onClick={this.props.prevMonth}
+            >
               <figure>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

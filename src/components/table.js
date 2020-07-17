@@ -7,7 +7,7 @@ import styled from "styled-components"
 // Bootstrap
 import Container from "react-bootstrap/Container"
 // date-fns
-import { format, addMonths, subMonths, formatDistance } from "date-fns"
+import { format, addMonths, subMonths } from "date-fns"
 // Axios
 import axios from "axios"
 import { baseURL } from "../base/axios.js"
@@ -29,6 +29,7 @@ export class Table extends Component {
     currentMonth: new Date(),
     selectedDate: new Date(),
     tasks: null,
+    calendarPrevButton: true,
     hideCompleted: true,
   }
 
@@ -48,7 +49,7 @@ export class Table extends Component {
               : 0
           })
           let nonCompletedTasks = []
-          response.map(elem => {
+          response.forEach(elem => {
             elem.statusChanger = false
           })
           // console.log(response)
@@ -60,8 +61,7 @@ export class Table extends Component {
 
           // Push all older tasks to today's date!
           const currentDate = format(new Date(), "yyyy-MM-dd")
-          console.log(currentDate)
-          nonCompletedTasks.map(elem => {
+          nonCompletedTasks.forEach(elem => {
             if (elem.dueDate < currentDate) {
               elem.dueDate = currentDate
             }
@@ -70,16 +70,21 @@ export class Table extends Component {
             this.setState({
               tasks: nonCompletedTasks,
             })
+            Number(format(this.state.currentMonth, "M")) >
+            Number(format(new Date(), "M"))
+              ? this.setState({ calendarPrevButton: true })
+              : this.setState({ calendarPrevButton: false })
           } else {
             this.setState({
               tasks: response,
+              calendarPrevButton: true,
             })
           }
           NProgress.done()
         }
       })
       .catch(err => {
-        console.log(err.response.data)
+        console.log(err)
         NProgress.done()
       })
   }
@@ -91,6 +96,7 @@ export class Table extends Component {
   nextMonth = () => {
     this.setState({
       currentMonth: addMonths(this.state.currentMonth, 1),
+      calendarPrevButton: true,
       state: this.state,
     })
   }
@@ -99,6 +105,15 @@ export class Table extends Component {
     this.setState({
       currentMonth: subMonths(this.state.currentMonth, 1),
     })
+    if (
+      Number(format(this.state.currentMonth, "M")) - 1 ===
+        Number(format(new Date(), "M")) &&
+      this.state.hideCompleted
+    ) {
+      this.setState({
+        calendarPrevButton: false,
+      })
+    }
   }
 
   updateRows = task => {
@@ -126,7 +141,7 @@ export class Table extends Component {
       .then(res => {
         console.log(res)
         let tasks = this.state.tasks
-        tasks.map(elem => {
+        tasks.forEach(elem => {
           if (elem.taskId === data.split("_").shift()) {
             elem.status = data.split("_").pop()
             elem.statusChanger = false
@@ -147,13 +162,24 @@ export class Table extends Component {
   }
 
   changeStatus = (e, data) => {
+    // if (this.node.contains(e.target)) {
     let tasks = this.state.tasks
-    tasks.map(elem => {
+    tasks.forEach(elem => {
       elem.statusChanger = false
       if (elem.taskId === data.split("_").shift()) {
         elem.statusChanger = true
-        console.log(elem)
       }
+    })
+    this.setState({
+      tasks,
+    })
+    // }
+  }
+
+  closeChangeStatus = () => {
+    let tasks = this.state.tasks
+    tasks.forEach(elem => {
+      elem.statusChanger = false
     })
     this.setState({
       tasks,
@@ -164,6 +190,14 @@ export class Table extends Component {
     this.state.hideCompleted
       ? this.setState({ hideCompleted: false })
       : this.setState({ hideCompleted: true })
+    if (
+      format(this.state.currentMonth, "M") - 1 < format(new Date(), "M") &&
+      !this.state.hideCompleted
+    ) {
+      this.setState({
+        currentMonth: new Date(),
+      })
+    }
     this.renderTasks()
   }
 
@@ -189,6 +223,7 @@ export class Table extends Component {
           <TableWrapper className="mt-3">
             <TableHeader
               currentMonth={format(this.state.currentMonth, dateFormat)}
+              calendarPrevButton={this.state.calendarPrevButton}
               prevMonth={this.prevMonth}
               nextMonth={this.nextMonth}
             />
@@ -197,6 +232,7 @@ export class Table extends Component {
               updateRows={this.updateRows}
               handleStatus={this.handleStatus}
               changeStatus={this.changeStatus}
+              closeChangeStatus={this.closeChangeStatus}
             />
             {children}
           </TableWrapper>
