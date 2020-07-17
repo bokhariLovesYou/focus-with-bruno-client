@@ -164,6 +164,11 @@ export class Table extends Component {
             elem.status = data.split("_").pop()
             elem.statusChanger = false
           }
+          if (elem.taskId === this.state.singleTaskDetails.taskId) {
+            this.setState({
+              singleTaskDetails: elem,
+            })
+          }
         })
         this.setState({
           tasks,
