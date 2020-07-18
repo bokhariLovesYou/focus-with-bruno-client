@@ -2,13 +2,7 @@ import React, { Component } from "react"
 import { Link } from "gatsby"
 // Styled Components
 import styled from "styled-components"
-import { Span } from "./StyledElements"
-// NProgress
-import NProgress from "nprogress"
-import "nprogress/nprogress.css"
-// Axios
-import axios from "axios"
-import { baseURL } from "../base/axios.js"
+import { Span } from "./styledElements"
 
 const TableHeaderWrapper = styled.div`
   padding: 0.5rem 1rem;

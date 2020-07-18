@@ -12,8 +12,8 @@ export const isLoggedIn = () => {
   return !!user.email
 }
 
-export const logout = callback => {
-  callback()
+export const logout = () => {
+  localStorage.removeItem("FBIdToken")
 }
 
 export const decodeJWT = token => {

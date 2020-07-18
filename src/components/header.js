@@ -3,7 +3,7 @@ import React, { Component } from "react"
 import Container from "react-bootstrap/Container"
 // Styled Components
 import styled from "styled-components"
-import { Span } from "./StyledElements"
+import { Span } from "./styledElements"
 
 const LogoWrapper = styled.div``
 const LogoBox = styled.div`

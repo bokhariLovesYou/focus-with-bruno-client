@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 // Styled Components
 import styled from "styled-components"
-import { Span } from "./StyledElements"
+import { Span } from "./styledElements"
 
 const TableHeaderWrapper = styled.div`
   padding: 0.5rem 1rem;

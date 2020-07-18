@@ -7,20 +7,18 @@ import Signup from "../components/Signup"
 import Tasks from "../components/tasks"
 
 // Authentication
-// import jwtDecode from "jwt-decode"
+import jwtDecode from "jwt-decode"
 import PrivateRoute from "../util/privateRoute"
+import { logout } from "../util/auth"
 
-// let authenticated
-// const token = window.localStorage.FBIdToken
-// if (token) {
-//   const decodedToken = jwtDecode(token)
-//   if (decodedToken.exp * 1000 < Date.now()) {
-//     window.location.href = "/a/login"
-//     authenticated = false
-//   } else {
-//     authenticated = true
-//   }
-// }
+const token = window.localStorage.FBIdToken
+if (token) {
+  const decodedToken = jwtDecode(token)
+  if (decodedToken.exp * 1000 < Date.now()) {
+    logout()
+    window.location.href = "/a/login"
+  }
+}
 
 const App = () => {
   return (

@@ -26,7 +26,7 @@ import {
   ErrorHelper,
   ContentBoxForm,
   ContentBoxMessage,
-} from "../components/StyledElements"
+} from "../components/styledElements"
 
 export class Signup extends Component {
   state = {

@@ -56,7 +56,6 @@ export class Table extends Component {
           response.forEach(elem => {
             elem.statusChanger = false
           })
-          // console.log(response)
           response.forEach(elem => {
             if (elem.status !== "Completed") {
               nonCompletedTasks.push(elem)
@@ -157,7 +156,6 @@ export class Table extends Component {
         config
       )
       .then(res => {
-        console.log(res)
         let tasks = this.state.tasks
         tasks.forEach(elem => {
           if (elem.taskId === data.split("_").shift()) {
@@ -250,12 +248,10 @@ export class Table extends Component {
       taskId = data
     } else {
       taskId = urlParams.get("task_id")
-      console.log(taskId)
     }
     axios
       .get(`${baseURL}/task/${taskId}`)
       .then(res => {
-        console.log(res)
         this.setState({
           renderTaskDetails: true,
           singleTaskDetails: res.data,
