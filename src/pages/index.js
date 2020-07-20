@@ -1,14 +1,16 @@
-import React from "react"
-// import { Link } from "gatsby"
+import React, { Component } from "react"
+import { navigate } from "gatsby"
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+export class IndexPage extends Component {
+  render() {
+    const redirectToLogin = () => {
+      if (typeof window !== `undefined`) {
+        navigate(`/a/login`)
+      }
+    }
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-  </Layout>
-)
+    return <>{redirectToLogin()}</>
+  }
+}
 
 export default IndexPage

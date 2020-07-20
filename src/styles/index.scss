@@ -3,6 +3,7 @@ $borderColor: #ccc;
 $lightGreen: #7ed8a6;
 $lightBlue: #83cefb;
 $darkGray: hsl(0, 0%, 30%);
+$error: #ff4e4e;
 
 body,
 html {
@@ -453,13 +454,13 @@ figure {
 #nprogress .spinner-icon {
   border-top-color: #b3fb9c !important;
   border-left-color: #b3fb9c !important;
-  // display: none;
+  display: none;
 }
 
 .table-header {
   &__tabs-wrapper {
     position: absolute;
-    top: -26px;
+    top: -25px;
     right: 2.5rem;
     @media (min-width: 768px) {
       right: 100px;
@@ -625,4 +626,62 @@ figure {
     padding-left: 6px;
     padding-right: 6px;
   }
+}
+
+.fixed-alert {
+  position: fixed;
+  top: 1rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  color: $error;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.3s ease;
+  margin-top: -1rem;
+  &.animate-in {
+    opacity: 1;
+    transition: 0.3s ease;
+    margin-top: 0;
+    visibility: visible;
+    pointer-events: all;
+  }
+  .toast-header {
+    color: $error;
+  }
+}
+
+.loading-skeleton {
+  width: 100%;
+  max-width: 300px;
+  height: 20px;
+  border-radius: 10px;
+  background-image: linear-gradient(90deg, #eee 0px, #e8e8e8 40px, #eee 80px);
+  background-size: 600px;
+  animation: shine-lines 1.6s infinite;
+  margin-bottom: 0.5rem;
+  &.medium {
+    max-width: 200px;
+  }
+  &.small {
+    max-width: 100px;
+  }
+}
+
+@keyframes shine-lines {
+  0% {
+    background-position: -100px;
+  }
+  40%,
+  100% {
+    background-position: 140px;
+  }
+}
+
+.task-details-wrapper {
+  background-color: #fff;
 }

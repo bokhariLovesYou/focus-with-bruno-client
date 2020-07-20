@@ -16,7 +16,6 @@ if (token) {
   const decodedToken = jwtDecode(token)
   if (decodedToken.exp * 1000 < Date.now()) {
     logout()
-    window.location.href = "/a/login"
   }
 }
 

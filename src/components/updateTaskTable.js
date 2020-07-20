@@ -3,6 +3,13 @@ import { Link } from "gatsby"
 // Styled Components
 import styled from "styled-components"
 import { Span } from "./styledElements"
+import { Form } from "../components/styledElements"
+// Bootstrap
+// import Spinner from "react-bootstrap/Spinner"
+// date-fns
+import { parse } from "date-fns"
+// DatePicker
+import DatePicker from "react-date-picker"
 
 const TableHeaderWrapper = styled.div`
   padding: 0.5rem 1rem;
@@ -23,9 +30,13 @@ const TableHeaderContents = styled.div`
 `
 
 export class UpdateTaskTable extends Component {
+  state = {
+    selectNewDate: false,
+  }
+
   render() {
     return (
-      <div className="update-task__table">
+      <>
         <TableHeaderWrapper>
           <TableHeaderContents>
             <Span Header Transformed>
@@ -56,53 +67,74 @@ export class UpdateTaskTable extends Component {
             </figure>
           </TableHeaderContents>
         </TableHeaderWrapper>
-        <div className="update-task__body">
-          <div className="update-task__field">
-            <div className="update-task__taskName">
-              <div className="update-task__label">Title:</div>
-              <div className="update-task__input">
-                <input
-                  type="input"
-                  value={this.props.singleTaskDetails.title}
-                />
+        <Form noValidate onSubmit={this.handleSubmit}>
+          <div className="update-task__body">
+            <div className="update-task__field">
+              <div className="update-task__taskName">
+                <div className="update-task__label">Title:</div>
+                <div className="update-task__input">
+                  <input
+                    type="input"
+                    name="title"
+                    onChange={this.props.handleUpdateTask}
+                    value={this.props.singleTaskDetails.title}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="update-task__field">
+              <div className="update-task__taskDueDate">
+                <div className="update-task__label">Due Date:</div>
+                <div className="update-task__input">
+                  <div className="custom-input">
+                    <span>{this.props.singleTaskDetails.dueDate}</span>
+                  </div>
+                  <input
+                    type="hidden"
+                    name="duedate"
+                    onChange={this.props.handleUpdateTask}
+                    value={this.props.singleTaskDetails.dueDate}
+                  />
+                  <DatePicker
+                    selected={parse(
+                      this.props.singleTaskDetails.dueDate,
+                      "yyyy/MM/dd",
+                      new Date()
+                    ).toString()}
+                    onChange={this.props.updateDueDate}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="update-task__field">
+              <div className="update-task__taskStatus">
+                <div className="update-task__label">Status:</div>
+                <div className="update-task__input">
+                  <input
+                    type="input"
+                    name="status"
+                    onChange={this.props.handleUpdateTask}
+                    value={this.props.singleTaskDetails.status}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="update-task__field">
+              <div className="update-task__taskStatus">
+                <div className="update-task__label">Description:</div>
+                <div className="update-task__input">
+                  <textarea
+                    type="input"
+                    name="body"
+                    onChange={this.props.handleUpdateTask}
+                    value={this.props.singleTaskDetails.body}
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="update-task__field">
-            <div className="update-task__taskDueDate">
-              <div className="update-task__label">Due Date:</div>
-              <div className="update-task__input">
-                <input
-                  type="input"
-                  value={this.props.singleTaskDetails.dueDate}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="update-task__field">
-            <div className="update-task__taskStatus">
-              <div className="update-task__label">Status:</div>
-              <div className="update-task__input">
-                <input
-                  type="input"
-                  value={this.props.singleTaskDetails.status}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="update-task__field">
-            <div className="update-task__taskStatus">
-              <div className="update-task__label">Description:</div>
-              <div className="update-task__input">
-                <textarea
-                  type="input"
-                  value={this.props.singleTaskDetails.body}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        </Form>
+      </>
     )
   }
 }

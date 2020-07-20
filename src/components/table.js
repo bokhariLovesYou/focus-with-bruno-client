@@ -6,6 +6,8 @@ import Pane from "./pane"
 import styled from "styled-components"
 // Bootstrap
 import { Container, Row, Col } from "react-bootstrap"
+import Toast from "react-bootstrap/Toast"
+// import Spinner from "react-bootstrap/Spinner"
 // date-fns
 import { format, addMonths, subMonths } from "date-fns"
 // Axios
@@ -35,10 +37,16 @@ export class Table extends Component {
     hideCompleted: true,
     renderTaskDetails: false,
     singleTaskDetails: null,
+    error: false,
+    loading: false,
   }
 
+  // Render Tasks
   renderTasks = () => {
     NProgress.inc()
+    this.setState({
+      loading: true,
+    })
     const userId = window.location.href.split("/")[5]
     axios
       .get(`${baseURL}/tasks/${userId}`)
@@ -72,6 +80,7 @@ export class Table extends Component {
           if (this.state.hideCompleted) {
             this.setState({
               tasks: nonCompletedTasks,
+              loading: false,
             })
             Number(format(this.state.currentMonth, "M")) >
             Number(format(new Date(), "M"))
@@ -81,6 +90,7 @@ export class Table extends Component {
             this.setState({
               tasks: response,
               calendarPrevButton: true,
+              loading: false,
             })
           }
         }
@@ -89,6 +99,10 @@ export class Table extends Component {
       .catch(err => {
         console.log(err)
         NProgress.done()
+        this.setState({
+          error: true,
+          loading: false,
+        })
       })
   }
 
@@ -104,6 +118,27 @@ export class Table extends Component {
     }
   }
 
+  // Handle Outside Click of Status Change Toolbox
+  componentWillUnmount() {
+    if (typeof document !== `undefined`) {
+      document.removeEventListener("mousedown", this.handleClick, false)
+    }
+  }
+
+  // Handle Outside Click of Status Change Toolbox
+  handleClick = e => {
+    if (this.node) {
+      const nodeName = this.node.getAttribute("data-tag")
+      const targetName = e.target.getAttribute("data-tag")
+      if (nodeName !== targetName) {
+        return
+      } else {
+        this.closeChangeStatus()
+      }
+    }
+  }
+
+  // Get Next Month
   nextMonth = () => {
     this.setState({
       currentMonth: addMonths(this.state.currentMonth, 1),
@@ -112,6 +147,7 @@ export class Table extends Component {
     })
   }
 
+  // Get Previous Month
   prevMonth = () => {
     this.setState({
       currentMonth: subMonths(this.state.currentMonth, 1),
@@ -127,6 +163,7 @@ export class Table extends Component {
     }
   }
 
+  // Update Rows
   updateRows = task => {
     if (this.state.tasks) {
       this.setState({
@@ -139,6 +176,7 @@ export class Table extends Component {
     }
   }
 
+  // Handle Status Change
   handleStatus = (e, data) => {
     NProgress.inc()
     const config = {
@@ -162,28 +200,33 @@ export class Table extends Component {
             elem.status = data.split("_").pop()
             elem.statusChanger = false
           }
-          if (elem.taskId === this.state.singleTaskDetails.taskId) {
-            this.setState({
-              singleTaskDetails: elem,
-            })
+          const urlParams = new URLSearchParams(window.location.search)
+          const paramTaskId = urlParams.get("task_id")
+          if (paramTaskId) {
+            if (elem.taskId === this.state.singleTaskDetails.taskId) {
+              this.setState({
+                singleTaskDetails: elem,
+              })
+            }
           }
         })
         this.setState({
           tasks,
         })
-        this.renderTasks()
+        // this.renderTasks()
         NProgress.done()
       })
       .catch(err => {
         console.log(err)
-        setTimeout(() => {
-          NProgress.done()
-        }, 2000)
+        NProgress.done()
+        this.setState({
+          error: true,
+        })
       })
   }
 
+  // Handle Status Change Toolbox
   changeStatus = (e, data) => {
-    // if (this.node.contains(e.target)) {
     let tasks = this.state.tasks
     tasks.forEach(elem => {
       elem.statusChanger = false
@@ -194,9 +237,9 @@ export class Table extends Component {
     this.setState({
       tasks,
     })
-    // }
   }
 
+  // Close Status Change Toolbox
   closeChangeStatus = () => {
     let tasks = this.state.tasks
     tasks.forEach(elem => {
@@ -207,6 +250,7 @@ export class Table extends Component {
     })
   }
 
+  // Hide Completed
   hideCompleted = () => {
     this.state.hideCompleted
       ? this.setState({ hideCompleted: false })
@@ -222,24 +266,7 @@ export class Table extends Component {
     this.renderTasks()
   }
 
-  componentWillUnmount() {
-    if (typeof document !== `undefined`) {
-      document.removeEventListener("mousedown", this.handleClick, false)
-    }
-  }
-
-  handleClick = e => {
-    if (this.node) {
-      const nodeName = this.node.getAttribute("data-tag")
-      const targetName = e.target.getAttribute("data-tag")
-      if (nodeName !== targetName) {
-        return
-      } else {
-        this.closeChangeStatus()
-      }
-    }
-  }
-
+  // Render Task Details
   renderTaskDetails = (e, data) => {
     NProgress.inc()
     const urlParams = new URLSearchParams(window.location.search)
@@ -261,15 +288,37 @@ export class Table extends Component {
       .catch(err => {
         console.log(err)
         NProgress.done()
+        this.setState({
+          error: true,
+        })
       })
   }
 
+  // Close Task Details
   closeTaskDetails = () => {
     NProgress.inc()
     this.setState({
       renderTaskDetails: false,
     })
     NProgress.done()
+  }
+
+  handleUpdateTask = event => {
+    this.setState({
+      singleTaskDetails: {
+        ...this.state.singleTaskDetails,
+        [event.target.name]: event.target.value,
+      },
+    })
+  }
+
+  updateDueDate = date => {
+    this.setState({
+      singleTaskDetails: {
+        ...this.state.singleTaskDetails,
+        dueDate: format(date, "yyyy-MM-dd"),
+      },
+    })
   }
 
   render() {
@@ -314,17 +363,37 @@ export class Table extends Component {
             </Col>
             {this.state.renderTaskDetails ? (
               <Col lg={4}>
-                <UpdateTaskTable
-                  closeTaskDetails={this.closeTaskDetails}
-                  singleTaskDetails={this.state.singleTaskDetails}
-                  renderTaskDetails={this.renderTaskDetails}
-                />
+                <div className="update-task__table">
+                  <UpdateTaskTable
+                    closeTaskDetails={this.closeTaskDetails}
+                    singleTaskDetails={this.state.singleTaskDetails}
+                    renderTaskDetails={this.renderTaskDetails}
+                    renderTaskDetailsState={this.state.renderTaskDetails}
+                    handleUpdateTask={this.handleUpdateTask}
+                    updateDueDate={this.updateDueDate}
+                  />
+                </div>
               </Col>
             ) : (
               ""
             )}
           </Row>
         </Container>
+        <div className={`fixed-alert ${this.state.error ? "animate-in" : ""}`}>
+          <Toast
+            onClose={() => this.setState({ error: false })}
+            // show={show}
+            delay={2000}
+            autohide
+          >
+            <Toast.Header>
+              <strong className="mr-auto">Error</strong>
+            </Toast.Header>
+            <Toast.Body>
+              Oh snap! We just hit an error. Please try again
+            </Toast.Body>
+          </Toast>
+        </div>
       </div>
     )
   }

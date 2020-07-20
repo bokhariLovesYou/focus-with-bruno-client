@@ -14,6 +14,7 @@ export const isLoggedIn = () => {
 
 export const logout = () => {
   localStorage.removeItem("FBIdToken")
+  window.location.href = "/a/login"
 }
 
 export const decodeJWT = token => {

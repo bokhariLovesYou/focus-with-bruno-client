@@ -115,24 +115,30 @@ export class PaneTitle extends Component {
               </div>
 
               <div className="pane__column mr-0">
-                {/* */}
-                {this.props.tasks.map((item, key) => (
-                  <Link
-                    onClick={e =>
-                      this.props.renderTaskDetails(e, item["taskId"])
-                    }
-                    key={key}
-                    to={`?task_id=${item["taskId"]}`}
-                  >
-                    <div className="pane__titleWrapper">
-                      <div className="pane__title">
-                        <span>{item["title"]}</span>
+                {!this.props.loading ? (
+                  this.props.tasks.map((item, key) => (
+                    <Link
+                      onClick={e =>
+                        this.props.renderTaskDetails(e, item["taskId"])
+                      }
+                      key={key}
+                      to={`?task_id=${item["taskId"]}`}
+                    >
+                      <div className="pane__titleWrapper">
+                        <div className="pane__title">
+                          <span>{item["title"]}</span>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  ))
+                ) : (
+                  <>
+                    <div className="loading-skeleton"></div>
+                    <div className="loading-skeleton medium"></div>
+                    <div className="loading-skeleton small"></div>
+                  </>
+                )}
 
-                {/*  */}
                 {this.state.addTask &&
                 this.props.currentMonth === this.state.newTaskMonth ? (
                   <div className="pane__addTaskInputWrapper">
@@ -166,14 +172,20 @@ export class PaneTitle extends Component {
                       this.renderAddTaskInput(e, this.props.currentMonth)
                     }
                   >
-                    <figure className="figure-wrapper pr-2">
-                      <svg viewBox="0 0 18 18" className="plus">
-                        <polygon points="17,8 10,8 10,1 8,1 8,8 1,8 1,10 8,10 8,17 10,17 10,10 17,10 "></polygon>
-                      </svg>
-                    </figure>
-                    <div className="pane__title">
-                      <span>Add a new task</span>
-                    </div>
+                    {!this.props.loading ? (
+                      <>
+                        <figure className="figure-wrapper pr-2">
+                          <svg viewBox="0 0 18 18" className="plus">
+                            <polygon points="17,8 10,8 10,1 8,1 8,8 1,8 1,10 8,10 8,17 10,17 10,10 17,10 "></polygon>
+                          </svg>
+                        </figure>
+                        <div className="pane__title">
+                          <span>Add a new task</span>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="loading-skeleton small"></div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -192,18 +204,26 @@ export class PaneTitle extends Component {
             <div className="pane__row pane-horizontal-default-padding">
               <div className="pane__column">
                 {/*  */}
-                {this.props.tasks.map((item, key) => (
-                  <PaneStatusLabel
-                    key={key}
-                    status={item["status"]}
-                    taskId={item["taskId"]}
-                    statusChanger={item["statusChanger"]}
-                    handleStatus={this.props.handleStatus}
-                    changeStatus={this.props.changeStatus}
-                    closeChangeStatus={this.props.closeChangeStatus}
-                    inputRef={this.props.inputRef}
-                  />
-                ))}
+                {!this.props.loading ? (
+                  this.props.tasks.map((item, key) => (
+                    <PaneStatusLabel
+                      key={key}
+                      status={item["status"]}
+                      taskId={item["taskId"]}
+                      statusChanger={item["statusChanger"]}
+                      handleStatus={this.props.handleStatus}
+                      changeStatus={this.props.changeStatus}
+                      closeChangeStatus={this.props.closeChangeStatus}
+                      inputRef={this.props.inputRef}
+                    />
+                  ))
+                ) : (
+                  <div className="ml-4">
+                    <div className="loading-skeleton small"></div>
+                    <div className="loading-skeleton small"></div>
+                    <div className="loading-skeleton small"></div>
+                  </div>
+                )}
                 {/*  */}
               </div>
             </div>

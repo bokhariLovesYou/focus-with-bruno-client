@@ -17,6 +17,7 @@ export class Pane extends Component {
             closeChangeStatus={this.props.closeChangeStatus}
             renderTaskDetails={this.props.renderTaskDetails}
             inputRef={this.props.inputRef}
+            loading={this.props.loading}
           />
         </div>
       </div>
