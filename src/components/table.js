@@ -110,6 +110,7 @@ export class Table extends Component {
     this.renderTasks()
     if (typeof document !== `undefined`) {
       document.addEventListener("mousedown", this.handleClick, false)
+      document.addEventListener("mousedown", this.handleClickSingle, false)
     }
     const urlParams = new URLSearchParams(window.location.search)
     const taskId = urlParams.get("task_id")
@@ -122,6 +123,7 @@ export class Table extends Component {
   componentWillUnmount() {
     if (typeof document !== `undefined`) {
       document.removeEventListener("mousedown", this.handleClick, false)
+      document.removeEventListener("mousedown", this.handleClickSingle, false)
     }
   }
 
@@ -134,6 +136,23 @@ export class Table extends Component {
         return
       } else {
         this.closeChangeStatus()
+      }
+    }
+  }
+
+  changeStatusSingle = () => {
+    this.setState({
+      singleTaskDetails: {
+        ...this.state.singleTaskDetails,
+        statusChanger: true,
+      },
+    })
+  }
+
+  handleClickSingle = e => {
+    if (this.node !== null) {
+      if (!this.node.contains(e.target)) {
+        this.closeStatusSingle()
       }
     }
   }
@@ -279,9 +298,10 @@ export class Table extends Component {
     axios
       .get(`${baseURL}/task/${taskId}`)
       .then(res => {
+        const responseData = res.data
         this.setState({
           renderTaskDetails: true,
-          singleTaskDetails: res.data,
+          singleTaskDetails: { ...responseData, statusChanger: false },
         })
         NProgress.done()
       })
@@ -317,6 +337,25 @@ export class Table extends Component {
       singleTaskDetails: {
         ...this.state.singleTaskDetails,
         dueDate: format(date, "yyyy-MM-dd"),
+      },
+    })
+  }
+
+  closeStatusSingle = () => {
+    this.setState({
+      singleTaskDetails: {
+        ...this.state.singleTaskDetails,
+        statusChanger: false,
+      },
+    })
+  }
+
+  handleStatusSingle = (e, data) => {
+    this.setState({
+      singleTaskDetails: {
+        ...this.state.singleTaskDetails,
+        status: data.split("_").pop(),
+        statusChanger: false,
       },
     })
   }
@@ -371,6 +410,10 @@ export class Table extends Component {
                     renderTaskDetailsState={this.state.renderTaskDetails}
                     handleUpdateTask={this.handleUpdateTask}
                     updateDueDate={this.updateDueDate}
+                    changeStatusSingle={this.changeStatusSingle}
+                    closeStatusSingle={this.closeStatusSingle}
+                    inputRefSingle={node => (this.node = node)}
+                    handleStatusSingle={this.handleStatusSingle}
                   />
                 </div>
               </Col>

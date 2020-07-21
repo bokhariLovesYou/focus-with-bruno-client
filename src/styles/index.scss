@@ -297,6 +297,14 @@ a {
     border-bottom: 1px solid hsl(202, 10%, 92%);
     max-height: 34.5px;
     overflow: hidden;
+    &.bolded {
+      font-weight: 600;
+      padding-left: 0;
+      .pane__status {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
     &.pane__addTaskWrapper {
       border-bottom: none;
       max-height: 100%;
@@ -370,6 +378,10 @@ a {
       &:last-child {
         border-bottom: none;
       }
+    }
+    &.single-task-status-changer {
+      top: 39px;
+      left: 0;
     }
   }
   &__status {
@@ -521,7 +533,7 @@ figure {
     border-radius: 6px;
   }
   &__body {
-    overflow: hidden;
+    // overflow: hidden;
     // padding: 2rem 1rem;
     input,
     textarea {
@@ -534,6 +546,9 @@ figure {
       font-weight: 600;
       margin-top: 0.4rem;
       font-size: 0.9rem;
+      &.completed {
+        border-color: rgba(126, 216, 166, 0.7);
+      }
     }
     textarea {
       min-height: 150px;
@@ -684,4 +699,114 @@ figure {
 
 .task-details-wrapper {
   background-color: #fff;
+}
+
+.react-date-picker {
+  display: block;
+  width: 100%;
+  &__wrapper {
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    border: 2px solid #ccc !important;
+    border-radius: 4px;
+    width: 100%;
+    font-weight: 600;
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    background-color: #fff;
+  }
+  &__inputGroup {
+    padding: 0;
+    display: flex;
+    input,
+    textarea {
+      border: none;
+      outline: none;
+      margin: 0;
+      border-radius: 0;
+      padding: 0;
+      height: auto;
+    }
+  }
+  .react-calendar {
+    border: none;
+    border: 2px solid #ccc !important;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+  }
+  &__button {
+    svg {
+      stroke: #777 !important;
+    }
+    &:hover {
+      svg {
+        stroke: $lightPurple !important;
+      }
+    }
+  }
+  &--disabled {
+    background: none !important;
+    .react-date-picker__wrapper {
+      opacity: 0.7;
+      border: 2px solid $lightGreen !important;
+    }
+    .react-date-picker__button svg {
+      stroke: #777 !important;
+    }
+  }
+}
+.update-task__input {
+  .react-calendar {
+    &__tile--active {
+      color: $lightPurple;
+    }
+    &__month-view__days__day--weekend {
+      color: $lightBlue;
+    }
+    &__tile {
+      border-radius: 5px;
+      height: 2.5rem;
+      font-size: 0.9rem;
+      color: #80008099;
+      padding: 0.5em;
+      &:hover {
+        background: rgba(0, 0, 0, 0.04) !important;
+      }
+      &:disabled {
+        background: none;
+        color: #ccc;
+        &:hover {
+          background: none !important;
+        }
+      }
+      &--active {
+        &:not(:disabled) {
+          background: $lightGreen;
+          color: #fff;
+          &:hover {
+            background: $lightGreen !important;
+          }
+        }
+      }
+      &--now {
+        background: $lightPurple;
+        &:hover {
+          background: $lightPurple !important;
+        }
+        color: #fff;
+      }
+    }
+    &__month-view__weekdays {
+      color: $lightBlue;
+    }
+    abbr[data-original-title],
+    abbr[title] {
+      text-decoration: none;
+    }
+  }
+}
+
+button.react-date-picker__clear-button.react-date-picker__button {
+  display: none !important;
 }

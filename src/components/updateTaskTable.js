@@ -7,9 +7,11 @@ import { Form } from "../components/styledElements"
 // Bootstrap
 // import Spinner from "react-bootstrap/Spinner"
 // date-fns
-import { parse } from "date-fns"
+import { parseISO, format, toDate } from "date-fns"
 // DatePicker
 import DatePicker from "react-date-picker"
+// Components
+import PaneStatusLabel from "./paneStatusLabel"
 
 const TableHeaderWrapper = styled.div`
   padding: 0.5rem 1rem;
@@ -30,9 +32,9 @@ const TableHeaderContents = styled.div`
 `
 
 export class UpdateTaskTable extends Component {
-  state = {
-    selectNewDate: false,
-  }
+  // componentDidMount() {
+  //   this.props.updateDueDate()
+  // }
 
   render() {
     return (
@@ -74,6 +76,11 @@ export class UpdateTaskTable extends Component {
                 <div className="update-task__label">Title:</div>
                 <div className="update-task__input">
                   <input
+                    className={
+                      this.props.singleTaskDetails.status === "Completed"
+                        ? "completed"
+                        : ""
+                    }
                     type="input"
                     name="title"
                     onChange={this.props.handleUpdateTask}
@@ -82,27 +89,39 @@ export class UpdateTaskTable extends Component {
                 </div>
               </div>
             </div>
+
             <div className="update-task__field">
               <div className="update-task__taskDueDate">
                 <div className="update-task__label">Due Date:</div>
                 <div className="update-task__input">
-                  <div className="custom-input">
+                  {/* <div className="custom-input">
                     <span>{this.props.singleTaskDetails.dueDate}</span>
-                  </div>
+                  </div> */}
                   <input
                     type="hidden"
                     name="duedate"
                     onChange={this.props.handleUpdateTask}
                     value={this.props.singleTaskDetails.dueDate}
                   />
-                  <DatePicker
-                    selected={parse(
-                      this.props.singleTaskDetails.dueDate,
-                      "yyyy/MM/dd",
-                      new Date()
-                    ).toString()}
-                    onChange={this.props.updateDueDate}
-                  />
+                  {this.props.singleTaskDetails.status !== "Completed" ? (
+                    <DatePicker
+                      minDetail="month"
+                      minDate={new Date()}
+                      value={toDate(
+                        parseISO(this.props.singleTaskDetails.dueDate)
+                      )}
+                      onChange={this.props.updateDueDate}
+                    />
+                  ) : (
+                    <DatePicker
+                      minDetail="month"
+                      disabled
+                      value={toDate(
+                        parseISO(this.props.singleTaskDetails.dueDate)
+                      )}
+                      onChange={this.props.updateDueDate}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -111,10 +130,20 @@ export class UpdateTaskTable extends Component {
                 <div className="update-task__label">Status:</div>
                 <div className="update-task__input">
                   <input
-                    type="input"
+                    type="hidden"
                     name="status"
                     onChange={this.props.handleUpdateTask}
                     value={this.props.singleTaskDetails.status}
+                  />
+                  <PaneStatusLabel
+                    status={this.props.singleTaskDetails.status}
+                    taskId={this.props.singleTaskDetails.taskId}
+                    statusChanger={this.props.singleTaskDetails.statusChanger}
+                    bolded
+                    changeStatusSingle={this.props.changeStatusSingle}
+                    closeStatusSingle={this.props.closeStatusSingle}
+                    inputRefSingle={this.props.inputRefSingle}
+                    handleStatus={this.props.handleStatusSingle}
                   />
                 </div>
               </div>
@@ -124,6 +153,11 @@ export class UpdateTaskTable extends Component {
                 <div className="update-task__label">Description:</div>
                 <div className="update-task__input">
                   <textarea
+                    className={
+                      this.props.singleTaskDetails.status === "Completed"
+                        ? "completed"
+                        : ""
+                    }
                     type="input"
                     name="body"
                     onChange={this.props.handleUpdateTask}
