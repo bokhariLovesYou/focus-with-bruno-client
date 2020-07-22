@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import PaneTitle from "./PaneTitle"
+import PaneTitle from "./paneTitle"
 // date-fns
 import {
   format,
