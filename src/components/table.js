@@ -87,20 +87,14 @@ export class Table extends Component {
             Number(format(new Date(), "M"))
               ? this.setState({ calendarPrevButton: true })
               : this.setState({ calendarPrevButton: false })
-          } else {
-            this.setState({
-              tasks: response,
-              calendarPrevButton: true,
-              loading: false,
-            })
           }
+        } else {
+          this.setState({
+            tasks: res.data,
+            calendarPrevButton: true,
+            loading: false,
+          })
         }
-        // let taskId
-        // if (data) {
-        //   taskId = data
-        // } else {
-        //   taskId = urlParams.get("task_id")
-        // }
         if (this.state.singleTaskDetails) {
           let tasks = this.state.tasks
           tasks.forEach(elem => {
@@ -169,7 +163,7 @@ export class Table extends Component {
   }
 
   handleClickSingle = e => {
-    if (this.node !== null) {
+    if (this.node != null) {
       if (!this.node.contains(e.target)) {
         this.closeStatusSingle()
       }
@@ -251,7 +245,6 @@ export class Table extends Component {
         this.setState({
           tasks,
         })
-        // this.renderTasks()
         NProgress.done()
       })
       .catch(err => {

@@ -45,8 +45,8 @@ export class Header extends Component {
             {/* //Logo */}
             {/* Account */}
             <AccountWrapper>
-              <AccountContent>
-                <Span onClick={logout}>Log out</Span>
+              <AccountContent onClick={logout}>
+                <Span>Log out</Span>
               </AccountContent>
             </AccountWrapper>
             {/* //Account */}
