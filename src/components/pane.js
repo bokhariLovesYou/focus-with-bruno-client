@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import PaneWrapper from "./PaneWrapper"
+import PaneWrapper from "./paneWrapper"
 
 export class Pane extends Component {
   render() {
