@@ -449,6 +449,12 @@ export class Table extends Component {
                   >
                     <span>Hide Completed</span>
                   </div>
+                  <div
+                    className={`table-header__tab refresh`}
+                    onClick={this.renderTasks}
+                  >
+                    <span>Refresh Board</span>
+                  </div>
                 </div>
               </div>
               <TableWrapper>

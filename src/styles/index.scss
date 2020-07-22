@@ -485,6 +485,9 @@ figure {
     }
     z-index: 1;
   }
+  &__tabs {
+    display: flex;
+  }
   &__tab {
     background-color: #fff;
     padding: 0.3rem 0.5rem 0 0.5rem;
@@ -493,12 +496,20 @@ figure {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     color: $darkGray;
+    margin-right: 0.5rem;
     &:hover {
       background-color: #eee;
     }
     &.active {
       background: #cef9eb;
       font-weight: 600;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+    &.refresh {
+      font-weight: 600;
+      color: #6a299a;
     }
   }
 }
