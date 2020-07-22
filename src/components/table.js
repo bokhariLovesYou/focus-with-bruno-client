@@ -39,6 +39,7 @@ export class Table extends Component {
     singleTaskDetails: null,
     error: false,
     loading: false,
+    loadingTaskDetails: false,
   }
 
   // Render Tasks
@@ -93,6 +94,24 @@ export class Table extends Component {
               loading: false,
             })
           }
+        }
+        // let taskId
+        // if (data) {
+        //   taskId = data
+        // } else {
+        //   taskId = urlParams.get("task_id")
+        // }
+        if (this.state.singleTaskDetails) {
+          let tasks = this.state.tasks
+          tasks.forEach(elem => {
+            elem.selected = false
+            if (elem.taskId === this.state.singleTaskDetails.taskId) {
+              elem.selected = true
+            }
+          })
+          this.setState({
+            tasks,
+          })
         }
         NProgress.done()
       })
@@ -298,10 +317,18 @@ export class Table extends Component {
     axios
       .get(`${baseURL}/task/${taskId}`)
       .then(res => {
+        let tasks = this.state.tasks
+        tasks.forEach(elem => {
+          elem.selected = false
+          if (elem.taskId === taskId) {
+            elem.selected = true
+          }
+        })
         const responseData = res.data
         this.setState({
           renderTaskDetails: true,
           singleTaskDetails: { ...responseData, statusChanger: false },
+          tasks,
         })
         NProgress.done()
       })
@@ -317,8 +344,14 @@ export class Table extends Component {
   // Close Task Details
   closeTaskDetails = () => {
     NProgress.inc()
+    let tasks = this.state.tasks
+    tasks.forEach(elem => {
+      elem.selected = false
+    })
     this.setState({
       renderTaskDetails: false,
+      singleTaskDetails: null,
+      tasks,
     })
     NProgress.done()
   }
@@ -360,10 +393,48 @@ export class Table extends Component {
     })
   }
 
+  handleSingleTaskUpdate = e => {
+    e.preventDefault()
+    this.setState({
+      loadingTaskDetails: true,
+    })
+    NProgress.inc()
+    let taskId = this.state.singleTaskDetails.taskId
+    const updatedData = {
+      createdAt: this.state.singleTaskDetails.createdAt,
+      userHandle: this.state.singleTaskDetails.userHandle,
+      dueDate: this.state.singleTaskDetails.dueDate,
+      status: this.state.singleTaskDetails.status,
+      title: this.state.singleTaskDetails.title,
+      body: this.state.singleTaskDetails.body,
+    }
+    const config = {
+      headers: {
+        Authorization: "Bearer " + getToken().split("Bearer ").pop(),
+      },
+    }
+    axios
+      .post(`${baseURL}/updatetask/${taskId}`, updatedData, config)
+      .then(res => {
+        this.renderTasks()
+        NProgress.done()
+        this.setState({
+          loadingTaskDetails: false,
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        NProgress.done()
+        this.setState({
+          error: true,
+          loadingTaskDetails: false,
+        })
+      })
+  }
+
   render() {
     const dateFormat = "MMMM yyyy"
     const { children } = this.props
-
     return (
       <div>
         <Container className="pos-rel mt-3">
@@ -414,6 +485,8 @@ export class Table extends Component {
                     closeStatusSingle={this.closeStatusSingle}
                     inputRefSingle={node => (this.node = node)}
                     handleStatusSingle={this.handleStatusSingle}
+                    handleSingleTaskUpdate={this.handleSingleTaskUpdate}
+                    loading={this.state.loadingTaskDetails}
                   />
                 </div>
               </Col>

@@ -26,6 +26,9 @@ import {
   ErrorHelper,
   ContentBoxForm,
   ContentBoxMessage,
+  LogoWrapper,
+  LogoBox,
+  LogoSpan,
 } from "../components/styledElements"
 
 export class Signup extends Component {
@@ -101,6 +104,15 @@ export class Signup extends Component {
             <Section>
               <Container>
                 <ContentBox>
+                  {/* Logo */}
+                  <LogoWrapper MW400 className="ml-auto mr-auto mb-4">
+                    <LogoBox Inverted Large className="ml-auto mr-auto">
+                      <LogoSpan Inverted Large>
+                        fo.
+                      </LogoSpan>
+                    </LogoBox>
+                  </LogoWrapper>
+                  {/* //Logo */}
                   <FormWrapper>
                     <Form noValidate onSubmit={this.handleSubmit}>
                       <FormTitle>Create an account.</FormTitle>

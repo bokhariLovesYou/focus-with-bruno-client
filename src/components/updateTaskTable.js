@@ -2,10 +2,9 @@ import React, { Component } from "react"
 import { Link } from "gatsby"
 // Styled Components
 import styled from "styled-components"
-import { Span } from "./styledElements"
-import { Form } from "../components/styledElements"
+import { Form, Button, Span } from "../components/styledElements"
 // Bootstrap
-// import Spinner from "react-bootstrap/Spinner"
+import Spinner from "react-bootstrap/Spinner"
 // date-fns
 import { parseISO, format, toDate } from "date-fns"
 // DatePicker
@@ -69,7 +68,7 @@ export class UpdateTaskTable extends Component {
             </figure>
           </TableHeaderContents>
         </TableHeaderWrapper>
-        <Form noValidate onSubmit={this.handleSubmit}>
+        <Form noValidate onSubmit={this.props.handleSingleTaskUpdate}>
           <div className="update-task__body">
             <div className="update-task__field">
               <div className="update-task__taskName">
@@ -94,9 +93,6 @@ export class UpdateTaskTable extends Component {
               <div className="update-task__taskDueDate">
                 <div className="update-task__label">Due Date:</div>
                 <div className="update-task__input">
-                  {/* <div className="custom-input">
-                    <span>{this.props.singleTaskDetails.dueDate}</span>
-                  </div> */}
                   <input
                     type="hidden"
                     name="duedate"
@@ -165,6 +161,23 @@ export class UpdateTaskTable extends Component {
                   />
                 </div>
               </div>
+            </div>
+            <div className="update-task__field">
+              {this.props.loading ? (
+                <div className="spinner-wrapper text-left">
+                  <Spinner
+                    animation="border"
+                    role="status"
+                    className="bootstrap--loader"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </div>
+              ) : (
+                <Button widthAuto Submit type="submit">
+                  Update
+                </Button>
+              )}
             </div>
           </div>
         </Form>

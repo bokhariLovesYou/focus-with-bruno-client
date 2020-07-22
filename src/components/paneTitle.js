@@ -124,7 +124,11 @@ export class PaneTitle extends Component {
                       key={key}
                       to={`?task_id=${item["taskId"]}`}
                     >
-                      <div className="pane__titleWrapper">
+                      <div
+                        className={`pane__titleWrapper ${
+                          item["selected"] ? "selected" : ""
+                        }`}
+                      >
                         <div className="pane__title">
                           <span>{item["title"]}</span>
                         </div>

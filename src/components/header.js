@@ -3,27 +3,9 @@ import React, { Component } from "react"
 import Container from "react-bootstrap/Container"
 // Styled Components
 import styled from "styled-components"
-import { Span } from "./styledElements"
-import { logout } from "../util/auth"
+import { Span, LogoWrapper, LogoBox, LogoSpan } from "./styledElements"
+import { logout, getUser } from "../util/auth"
 
-const LogoWrapper = styled.div``
-const LogoBox = styled.div`
-  background-color: #fff;
-  width: 50px;
-  height: 25px;
-  border-radius: 4px;
-  position: relative;
-  cursor: pointer;
-`
-const LogoSpan = styled.span`
-  font-size: 1.1rem;
-  color: #6a299a;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: 600;
-`
 const HeaderOuterWrapper = styled.div`
   padding: 1rem 0;
 `
@@ -50,6 +32,7 @@ const AccountContent = styled.div`
 
 export class Header extends Component {
   render() {
+    console.log(getUser())
     return (
       <HeaderOuterWrapper>
         <Container>

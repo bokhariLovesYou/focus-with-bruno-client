@@ -317,9 +317,15 @@ a {
         background-color: rgba(0, 0, 0, 0.02);
         cursor: pointer;
         font-weight: 600;
-        // border-radius: 4px;
-        // border-top: 1px solid #fff;
-        // border-bottom: 1px solid #fff;
+      }
+    }
+    &.selected {
+      font-weight: 600;
+      background-color: rgb(254, 243, 239);
+      border-left: 1px solid #e9ebed;
+      color: #6a299a;
+      &:hover {
+        background-color: rgb(254, 243, 239);
       }
     }
   }
@@ -776,6 +782,14 @@ figure {
       &:disabled {
         background: none;
         color: #ccc;
+        &.react-calendar__tile--active {
+          background-color: $lightGreen !important;
+          opacity: 0.5;
+          color: #80008099;
+          &:hover {
+            background-color: $lightGreen !important;
+          }
+        }
         &:hover {
           background: none !important;
         }
@@ -790,11 +804,7 @@ figure {
         }
       }
       &--now {
-        background: $lightPurple;
-        &:hover {
-          background: $lightPurple !important;
-        }
-        color: #fff;
+        background: transparent;
       }
     }
     &__month-view__weekdays {

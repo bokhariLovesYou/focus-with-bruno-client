@@ -11,7 +11,9 @@ export const HeadingLarge = styled.h1``
 
 export const FlexColumn = styled.div``
 
-export const ContentBox = styled.div``
+export const ContentBox = styled.div`
+  max-width: ${props => (props.MW400 ? "400px" : "")};
+`
 
 export const Section = styled.section`
   padding: 2rem 0;
@@ -286,6 +288,7 @@ export const Button = styled.button`
   outline: none;
   border: 0;
   width: 100%;
+  width: ${props => (props.widthAuto ? "auto" : "")};
   font-size: 1rem;
   border-radius: 4px;
   background-color: #6a299a;
@@ -452,4 +455,30 @@ export const RegisterWrapper = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
+`
+
+export const LogoWrapper = styled.div`
+  max-width: ${props => (props.MW400 ? "400px" : "")};
+`
+export const LogoBox = styled.div`
+  background-color: #fff;
+  background-color: ${props => (props.Inverted ? "#6a299a;" : "")};
+  width: 50px;
+  height: 25px;
+  width: ${props => (props.Large ? "60px;" : "")};
+  height: ${props => (props.Large ? "60px;" : "")};
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+`
+export const LogoSpan = styled.span`
+  font-size: 1.1rem;
+  font-size: ${props => (props.Large ? "2rem;" : "")};
+  color: #6a299a;
+  color: ${props => (props.Inverted ? "#fff;" : "")};
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
 `
