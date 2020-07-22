@@ -32,7 +32,6 @@ const AccountContent = styled.div`
 
 export class Header extends Component {
   render() {
-    console.log(getUser())
     return (
       <HeaderOuterWrapper>
         <Container>

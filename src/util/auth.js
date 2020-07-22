@@ -13,10 +13,8 @@ export const isLoggedIn = () => {
 }
 
 export const logout = () => {
-  if (typeof window !== `undefined`) {
-    localStorage.removeItem("FBIdToken")
-    window.location.href = "/a/login"
-  }
+  localStorage.removeItem("FBIdToken")
+  window.location.href = "/a/login"
 }
 
 export const decodeJWT = token => {

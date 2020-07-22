@@ -11,11 +11,13 @@ import jwtDecode from "jwt-decode"
 import PrivateRoute from "../util/privateRoute"
 import { logout } from "../util/auth"
 
-const token = window.localStorage.FBIdToken
-if (token) {
-  const decodedToken = jwtDecode(token)
-  if (decodedToken.exp * 1000 < Date.now()) {
-    logout()
+if (typeof window !== `undefined`) {
+  const token = window.localStorage.FBIdToken
+  if (token) {
+    const decodedToken = jwtDecode(token)
+    if (decodedToken.exp * 1000 < Date.now()) {
+      logout()
+    }
   }
 }
 
