@@ -87,6 +87,12 @@ export class Table extends Component {
             Number(format(new Date(), "M"))
               ? this.setState({ calendarPrevButton: true })
               : this.setState({ calendarPrevButton: false })
+          } else {
+            this.setState({
+              tasks: res.data,
+              calendarPrevButton: true,
+              loading: false,
+            })
           }
         } else {
           this.setState({
