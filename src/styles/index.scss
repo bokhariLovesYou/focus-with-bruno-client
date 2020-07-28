@@ -449,7 +449,10 @@ a {
 }
 
 .pane__sub-header__contents__title {
-  padding-left: 4rem;
+  padding-left: 3rem;
+  @media (min-width: 576px) {
+    padding-left: 4.5rem;
+  }
   font-weight: 600;
 }
 
