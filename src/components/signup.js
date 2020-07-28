@@ -218,7 +218,7 @@ export class Signup extends Component {
                             type="handle"
                             name="handle"
                             maxlength="3000"
-                            placeholder="@Handle"
+                            placeholder="@username"
                             value={this.state.handle}
                             onChange={this.handleChange}
                           />

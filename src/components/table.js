@@ -23,9 +23,11 @@ import UpdateTaskTable from "./updateTaskTable"
 
 const TableWrapper = styled.div`
   background-color: #fff;
-  height: 88vh;
-  border-radius: 4px;
-  overflow-y: auto;
+  @media (min-width: 576px) {
+    height: 88vh;
+    border-radius: 4px;
+    overflow-y: auto;
+  }
 `
 
 export class Table extends Component {
@@ -436,9 +438,12 @@ export class Table extends Component {
     const { children } = this.props
     return (
       <div>
-        <Container className="pos-rel mt-3">
+        <Container className="pos-rel mt-5 mt-md-3 main-table__k0shaq">
           <Row>
-            <Col lg={this.state.renderTaskDetails ? 8 : 12}>
+            <Col
+              className={this.state.renderTaskDetails ? "hide-on-small" : ""}
+              lg={this.state.renderTaskDetails ? 8 : 12}
+            >
               <div className="table-header__tabs-wrapper">
                 <div className="table-header__tabs">
                   <div

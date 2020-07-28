@@ -8,9 +8,12 @@ import Footer from "./footer"
 import styled from "styled-components"
 const LayoutWrapper = styled.div`
   background-color: #6a299a;
-  height: 100vh;
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  @media (min-width: 576px) {
+    height: 100vh;
+    overflow: hidden;
+  }
 `
 
 const Main = styled.main``

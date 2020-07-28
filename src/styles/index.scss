@@ -238,15 +238,33 @@ a {
   }
   &__title-wrapper {
     width: 100%;
-    max-width: 70%;
+    max-width: 60%;
+    overflow-x: scroll;
+    @media (min-width: 576px) {
+      max-width: 70%;
+      overflow-x: unset;
+    }
     .pane__row {
       padding-right: 0;
+      min-width: 500px;
+      @media (min-width: 576px) {
+        min-width: auto;
+      }
+    }
+    .pane__sub-header {
+      min-width: 500px;
+      @media (min-width: 576px) {
+        min-width: auto;
+      }
     }
   }
   &__status-wrapper {
     background-color: #fef3ef;
     width: 100%;
-    max-width: 30%;
+    max-width: 40%;
+    @media (min-width: 576px) {
+      max-width: 30%;
+    }
     border-left: 1px solid $borderColor;
     .pane__row {
       padding-left: 0;
@@ -289,7 +307,10 @@ a {
     }
   }
   &__labelDateWrapper {
-    padding-right: 1.5rem;
+    padding-right: 0;
+    @media (min-width: 576px) {
+      padding-right: 1.5rem;
+    }
   }
   &__titleWrapper,
   &__statusWrapper {
@@ -547,7 +568,9 @@ figure {
     height: 88vh;
     overflow-y: scroll;
     background-color: #fef3ef;
-    border-radius: 6px;
+    @media (min-width: 992px) {
+      border-radius: 6px;
+    }
   }
   &__body {
     // overflow: hidden;
@@ -579,6 +602,9 @@ figure {
     padding: 1rem;
     background-color: #fef3ef;
     border-bottom: 1px solid #ccc;
+    &:last-child {
+      border-bottom: none;
+    }
   }
 }
 
@@ -830,4 +856,20 @@ figure {
 
 button.react-date-picker__clear-button.react-date-picker__button {
   display: none !important;
+}
+
+.main-table__k0shaq {
+  padding-left: 0;
+  padding-right: 0;
+  @media (min-width: 768px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.hide-on-small {
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
+  }
 }
