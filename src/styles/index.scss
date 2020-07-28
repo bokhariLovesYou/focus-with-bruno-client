@@ -569,6 +569,8 @@ figure {
 .update-task {
   &__table {
     background-color: #fef3ef;
+    height: 87vh;
+    overflow-y: scroll;
     @media (min-width: 576px) {
       border-radius: 6px;
       height: 88vh;
@@ -870,9 +872,24 @@ button.react-date-picker__clear-button.react-date-picker__button {
   }
 }
 
-.hide-on-small {
-  display: none;
+.main-table-column {
+  height: 87vh;
+  transition: 0.2s ease;
   @media (min-width: 992px) {
-    display: block;
+    height: auto;
+    transition: none;
   }
+}
+
+.hide-on-small {
+  height: 0;
+  transition: 0.2s ease;
+  @media (min-width: 992px) {
+    height: auto;
+    transition: none;
+  }
+}
+
+.update-task-column {
+  transition: 0.2s ease;
 }

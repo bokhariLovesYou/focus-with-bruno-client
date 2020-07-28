@@ -10,10 +10,8 @@ const LayoutWrapper = styled.div`
   background-color: #6a299a;
   width: 100%;
   overflow-x: hidden;
-  @media (min-width: 576px) {
-    height: 100vh;
-    overflow: hidden;
-  }
+  height: 100vh;
+  overflow: hidden;
 `
 
 const Main = styled.main``
