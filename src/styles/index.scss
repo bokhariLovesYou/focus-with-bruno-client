@@ -565,11 +565,11 @@ figure {
 
 .update-task {
   &__table {
-    height: 88vh;
-    overflow-y: scroll;
     background-color: #fef3ef;
     @media (min-width: 576px) {
       border-radius: 6px;
+      height: 88vh;
+      overflow-y: scroll;
     }
   }
   &__body {
