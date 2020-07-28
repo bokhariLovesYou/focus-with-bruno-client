@@ -877,6 +877,7 @@ button.react-date-picker__clear-button.react-date-picker__button {
   transition: 0.2s ease;
   @media (min-width: 992px) {
     height: auto;
+    transition: none;
   }
 }
 
@@ -885,6 +886,7 @@ button.react-date-picker__clear-button.react-date-picker__button {
   transition: 0.2s ease;
   @media (min-width: 992px) {
     height: auto;
+    transition: none;
   }
 }
 
