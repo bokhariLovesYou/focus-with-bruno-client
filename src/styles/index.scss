@@ -872,24 +872,28 @@ button.react-date-picker__clear-button.react-date-picker__button {
   }
 }
 
-.main-table-column {
-  height: 87vh;
-  transition: 0.2s ease;
-  @media (min-width: 992px) {
-    height: auto;
-    transition: none;
-  }
-}
+// .main-table-column {
+//   // height: 87vh;
+//   // transition: 0.2s ease;
+//   // @media (min-width: 992px) {
+//   //   height: auto;
+//   //   transition: none;
+//   // }
+// }
 
 .hide-on-small {
-  height: 0;
-  transition: 0.2s ease;
+  // height: 0;
+  // transition: 0.2s ease;
+  // @media (min-width: 992px) {
+  //   height: auto;
+  //   transition: none;
+  // }
+  display: none;
   @media (min-width: 992px) {
-    height: auto;
-    transition: none;
+    display: block;
   }
 }
 
-.update-task-column {
-  transition: 0.2s ease;
-}
+// .update-task-column {
+//   transition: 0.2s ease;
+// }
