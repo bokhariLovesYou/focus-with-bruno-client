@@ -19,7 +19,7 @@ const TableHeaderWrapper = styled.div`
   top: 0;
   background-color: #fff;
   z-index: 2;
-  @media (min-width: 992px) {
+  @media (min-width: 576px) {
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
   }

@@ -568,7 +568,7 @@ figure {
     height: 88vh;
     overflow-y: scroll;
     background-color: #fef3ef;
-    @media (min-width: 992px) {
+    @media (min-width: 576px) {
       border-radius: 6px;
     }
   }
