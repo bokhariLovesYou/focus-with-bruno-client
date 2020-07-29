@@ -52,7 +52,13 @@ export class Table extends Component {
     })
     const userId = window.location.href.split("/")[5]
     axios
-      .get(`${baseURL}/tasks/${userId}`)
+      .get(
+        `${
+          !this.state.hideCompleted
+            ? `${baseURL}/incompletedtasks/${userId}`
+            : `${baseURL}/tasks/${userId}`
+        }`
+      )
       .then(res => {
         if (res.data.length > 0) {
           let response = res.data
