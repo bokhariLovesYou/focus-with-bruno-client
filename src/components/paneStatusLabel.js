@@ -5,7 +5,9 @@ export class PaneStatusLabel extends Component {
   render() {
     return (
       <div
-        className={`pane__statusWrapper ${this.props.bolded ? "bolded" : ""}`}
+        className={`pane__statusWrapper ${this.props.bolded ? "bolded" : ""} ${
+          this.props.extraClass ? this.props.extraClass : ""
+        }`}
       >
         <div
           className={`pane__status ${slugify(this.props.status.toLowerCase())}`}

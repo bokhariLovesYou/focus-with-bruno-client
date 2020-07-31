@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Focuswithbruno.`,
+    title: `Focus With Bruno`,
     description: ``,
     author: `Paras Bokhari`,
   },
@@ -34,6 +34,12 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-111625564-3",
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

@@ -99,12 +99,14 @@ export class UpdateTaskTable extends Component {
                     type="hidden"
                     name="duedate"
                     onChange={this.props.handleUpdateTask}
+                    onFocus={e => (e.target.readOnly = true)}
                     value={this.props.singleTaskDetails.dueDate}
                   />
                   {this.props.singleTaskDetails.status !== "Completed" ? (
                     <DatePicker
                       minDetail="month"
                       minDate={new Date()}
+                      onFocus={e => (e.target.readOnly = true)}
                       value={toDate(
                         parseISO(this.props.singleTaskDetails.dueDate)
                       )}
@@ -136,6 +138,7 @@ export class UpdateTaskTable extends Component {
                   <PaneStatusLabel
                     status={this.props.singleTaskDetails.status}
                     taskId={this.props.singleTaskDetails.taskId}
+                    extraClass={`no-border-bottom`}
                     statusChanger={this.props.singleTaskDetails.statusChanger}
                     bolded
                     changeStatusSingle={this.props.changeStatusSingle}

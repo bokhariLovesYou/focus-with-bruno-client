@@ -17,7 +17,7 @@ import { baseURL } from "../base/axios.js"
 import NProgress from "nprogress"
 import "nprogress/nprogress.css"
 // Authentication
-import { getToken } from "../util/auth"
+import { getToken, getUser } from "../util/auth"
 // Update Task Components
 import UpdateTaskTable from "./updateTaskTable"
 
@@ -50,7 +50,7 @@ export class Table extends Component {
     this.setState({
       loading: true,
     })
-    const userId = window.location.href.split("/")[5]
+    const userId = getUser().user_id
     axios
       .get(
         `${

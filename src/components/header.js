@@ -3,7 +3,9 @@ import React, { Component } from "react"
 import Container from "react-bootstrap/Container"
 // Styled Components
 import styled from "styled-components"
+// Elements
 import { Span, LogoWrapper, LogoBox, LogoSpan } from "./styledElements"
+// Auth
 import { logout, getUser } from "../util/auth"
 
 const HeaderOuterWrapper = styled.div`
