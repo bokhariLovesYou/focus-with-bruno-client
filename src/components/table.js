@@ -23,10 +23,12 @@ import UpdateTaskTable from "./updateTaskTable"
 
 const TableWrapper = styled.div`
   background-color: #fff;
+  min-height: 100vh;
   @media (min-width: 576px) {
     border-radius: 4px;
     height: 88vh;
     overflow-y: auto;
+    min-height: auto;
   }
 `
 
