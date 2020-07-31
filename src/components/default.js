@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { navigate } from "gatsby"
 
-export class NotFoundPage extends Component {
+export class Default extends Component {
   render() {
     const redirectToLogin = () => {
       if (typeof window !== `undefined`) {
@@ -13,4 +13,4 @@ export class NotFoundPage extends Component {
   }
 }
 
-export default NotFoundPage
+export default Default

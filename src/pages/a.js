@@ -5,6 +5,7 @@ import { Router } from "@reach/router"
 import Login from "../components/login"
 import Signup from "../components/signup"
 import Tasks from "../components/tasks"
+import Default from "../components/default"
 
 // Authentication
 import jwtDecode from "jwt-decode"
@@ -27,6 +28,7 @@ const App = () => {
       <Login path="/login" />
       <Signup path="/signup" />
       <PrivateRoute path="/tasks/:id" component={Tasks} />
+      <Default default />
     </Router>
   )
 }
