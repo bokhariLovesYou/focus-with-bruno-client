@@ -300,7 +300,7 @@ export class Table extends Component {
   hideCompletedRenderer = () => {
     if (
       format(this.state.currentMonth, "M") - 1 < format(new Date(), "M") &&
-      !this.state.hideCompleted
+      this.state.hideCompleted
     ) {
       this.setState({
         currentMonth: new Date(),
