@@ -56,7 +56,7 @@ export class Table extends Component {
     axios
       .get(
         `${
-          !this.state.hideCompleted
+          this.state.hideCompleted
             ? `${baseURL}/incompletedtasks/${userId}`
             : `${baseURL}/tasks/${userId}`
         }`
@@ -297,11 +297,7 @@ export class Table extends Component {
     })
   }
 
-  // Hide Completed
-  hideCompleted = () => {
-    this.state.hideCompleted
-      ? this.setState({ hideCompleted: false })
-      : this.setState({ hideCompleted: true })
+  hideCompletedRenderer = () => {
     if (
       format(this.state.currentMonth, "M") - 1 < format(new Date(), "M") &&
       !this.state.hideCompleted
@@ -311,6 +307,17 @@ export class Table extends Component {
       })
     }
     this.renderTasks()
+  }
+
+  // Hide Completed
+  hideCompleted = () => {
+    this.state.hideCompleted
+      ? this.setState({ hideCompleted: false }, () => {
+          this.hideCompletedRenderer()
+        })
+      : this.setState({ hideCompleted: true }, () => {
+          this.hideCompletedRenderer()
+        })
   }
 
   // Render Task Details
